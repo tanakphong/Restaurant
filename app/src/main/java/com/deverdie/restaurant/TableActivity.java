@@ -1,5 +1,6 @@
 package com.deverdie.restaurant;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -10,6 +11,7 @@ import android.widget.Toast;
 
 import com.deverdie.restaurant.Interface.TableInterface;
 import com.deverdie.restaurant.adapter.TableAdapter;
+import com.deverdie.restaurant.model.SaveInstanceState;
 import com.deverdie.restaurant.model.TableRes;
 import com.deverdie.restaurant.util.RetrofitClient;
 
@@ -18,7 +20,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class TableActivity extends AppCompatActivity implements TableAdapter.ItemClickListener {
-    private static final String TAG = "dlg "+TableActivity.class.getSimpleName();
+    private static final String TAG = "dlg " + TableActivity.class.getSimpleName();
     private TableAdapter adapter;
 
     @Override
@@ -39,7 +41,7 @@ public class TableActivity extends AppCompatActivity implements TableAdapter.Ite
 
         adapter = new TableAdapter(getApplicationContext());
 
-        recyclerView.setLayoutManager(new SpanningGridLayoutManager(this,2));
+        recyclerView.setLayoutManager(new SpanningGridLayoutManager(this, 2));
         adapter.setClickListener(this);
         recyclerView.setAdapter(adapter);
 
@@ -95,8 +97,11 @@ public class TableActivity extends AppCompatActivity implements TableAdapter.Ite
 
     @Override
     public void onItemClick(View view, int position) {
-        Log.i("TAG", "You clicked number " + adapter.getItem(position).getDesc() + ", which is at cell position " + position);
-        Toast.makeText(getApplicationContext(),adapter.getItem(position).getId() ,Toast.LENGTH_SHORT).show();
+//        Log.i("TAG", "You clicked number " + adapter.getItem(position).getDesc() + ", which is at cell position " + position);
+//        Toast.makeText(getApplicationContext(), adapter.getItem(position).getId(), Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(TableActivity.this, MenuActivity.class);
+        intent.putExtra(SaveInstanceState.TABLE, adapter.getItem(position).getId());
+        startActivity(intent);
     }
 
 }

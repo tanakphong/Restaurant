@@ -21,10 +21,6 @@ public class TableRes {
         return returnX;
     }
 
-    public void setReturnX(boolean returnX) {
-        this.returnX = returnX;
-    }
-
     public String getMessage() {
         return message;
     }
