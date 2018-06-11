@@ -14,16 +14,20 @@ import com.bumptech.glide.Glide;
 import com.deverdie.restaurant.R;
 import com.deverdie.restaurant.model.TableRes;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class TableAdapter extends RecyclerView.Adapter<TableAdapter.TableViewHolder> {
-    Context context;
-    List<TableRes> tables;
+    private Context context;
+    private List<TableRes.DataBean> tables = new ArrayList<>();
     private ItemClickListener mClickListener;
 
-    public TableAdapter(Context context,List<TableRes> tables){
+    public TableAdapter(Context context) {
         this.context = context;
-        this.tables = tables;
+    }
+
+    public void add(TableRes.DataBean dataBean) {
+        tables.add(dataBean);
     }
 
     @NonNull
@@ -36,11 +40,13 @@ public class TableAdapter extends RecyclerView.Adapter<TableAdapter.TableViewHol
 
     @Override
     public void onBindViewHolder(@NonNull TableViewHolder holder, int position) {
-        holder.code.setText(tables.get(position).getCode());
-        holder.desc.setText(tables.get(position).getDesc());
+        TableRes.DataBean table = getItem(position);
+        holder.id.setText(table.getId());
+        holder.code.setText(table.getCode());
+        holder.desc.setText(table.getDesc());
 //        holder.photo.setImageResource(tables.get(position).getPhotoId());
         Glide.with(context)
-                .load(tables.get(position).getPhoto_path())
+                .load(table.getPhoto_path())
 //                .apply(RequestOptions.circleCropTransform())
 //                .apply(RequestOptions.fitCenterTransform())
                 .into(holder.photo);
@@ -53,6 +59,7 @@ public class TableAdapter extends RecyclerView.Adapter<TableAdapter.TableViewHol
 
     public class TableViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         CardView cv;
+        TextView id;
         TextView code;
         TextView desc;
         ImageView photo;
@@ -60,6 +67,7 @@ public class TableAdapter extends RecyclerView.Adapter<TableAdapter.TableViewHol
         TableViewHolder(View itemView) {
             super(itemView);
             cv = itemView.findViewById(R.id.cv);
+            id = itemView.findViewById(R.id.id);
             code = itemView.findViewById(R.id.code);
             desc = itemView.findViewById(R.id.desc);
             photo = itemView.findViewById(R.id.photo);
@@ -74,7 +82,7 @@ public class TableAdapter extends RecyclerView.Adapter<TableAdapter.TableViewHol
 
 
     // convenience method for getting data at click position
-    public TableRes getItem(int id) {
+    public TableRes.DataBean getItem(int id) {
         return tables.get(id);
     }
 
