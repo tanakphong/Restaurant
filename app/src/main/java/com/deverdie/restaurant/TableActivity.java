@@ -4,16 +4,18 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 
 import com.deverdie.restaurant.adapter.TableAdapter;
-import com.deverdie.restaurant.adapter.TableRecyclerViewAdapter;
 import com.deverdie.restaurant.model.TableRes;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class TableActivity extends AppCompatActivity implements TableRecyclerViewAdapter.ItemClickListener {
+public class TableActivity extends AppCompatActivity implements TableAdapter.ItemClickListener {
+    private TableAdapter adapter;
+
 
 //    TableRecyclerViewAdapter adapter;
 
@@ -82,17 +84,17 @@ public class TableActivity extends AppCompatActivity implements TableRecyclerVie
 
         RecyclerView recyclerView = findViewById(R.id.rvNumbers);
 
-        TableAdapter adapter = new TableAdapter(getApplicationContext(), tables);
+         adapter = new TableAdapter(getApplicationContext(), tables);
 
         LinearLayoutManager llm = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(llm);
-
+        adapter.setClickListener(this);
         recyclerView.setAdapter(adapter);
     }
 
     @Override
     public void onItemClick(View view, int position) {
-//        Log.i("TAG", "You clicked number " + adapter.getItem(position) + ", which is at cell position " + position);
+        Log.i("TAG", "You clicked number " + adapter.getItem(position).getDesc() + ", which is at cell position " + position);
 
     }
 

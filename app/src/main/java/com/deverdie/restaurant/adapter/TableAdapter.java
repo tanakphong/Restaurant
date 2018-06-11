@@ -20,6 +20,7 @@ import java.util.List;
 public class TableAdapter extends RecyclerView.Adapter<TableAdapter.TableViewHolder> {
     Context context;
     List<TableRes> tables;
+    private ItemClickListener mClickListener;
 
     public TableAdapter(Context context,List<TableRes> tables){
         this.context = context;
@@ -41,7 +42,8 @@ public class TableAdapter extends RecyclerView.Adapter<TableAdapter.TableViewHol
 //        holder.photo.setImageResource(tables.get(position).getPhotoId());
         Glide.with(context)
                 .load(tables.get(position).getPhoto_path())
-                .apply(RequestOptions.circleCropTransform())
+//                .apply(RequestOptions.circleCropTransform())
+                .apply(RequestOptions.fitCenterTransform())
                 .into(holder.photo);
     }
 
@@ -63,5 +65,21 @@ public class TableAdapter extends RecyclerView.Adapter<TableAdapter.TableViewHol
             desc = itemView.findViewById(R.id.desc);
             photo = itemView.findViewById(R.id.photo);
         }
+    }
+
+
+    // convenience method for getting data at click position
+    public TableRes getItem(int id) {
+        return tables.get(id);
+    }
+
+    // allows clicks events to be caught
+    public void setClickListener(ItemClickListener itemClickListener) {
+        this.mClickListener = itemClickListener;
+    }
+
+    // parent activity will implement this method to respond to click events
+    public interface ItemClickListener {
+        void onItemClick(View view, int position);
     }
 }
