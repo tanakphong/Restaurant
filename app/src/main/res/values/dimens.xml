@@ -3,5 +3,8 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="table_grid_height">16dp</dimen>
+    <dimen name="widget_cardview_activity_table_photo_width">64dp</dimen>
+    <dimen name="widget_cardview_activity_table_textsize_code">28sp</dimen>
+    <dimen name="widget_cardview_activity_table_textsize_desc">16sp</dimen>
 
 </resources>

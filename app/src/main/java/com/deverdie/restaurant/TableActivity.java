@@ -6,9 +6,9 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-import com.deverdie.restaurant.adapter.RVAdapter;
+import com.deverdie.restaurant.adapter.TableAdapter;
 import com.deverdie.restaurant.adapter.TableRecyclerViewAdapter;
-import com.deverdie.restaurant.model.Person;
+import com.deverdie.restaurant.model.TableRes;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,14 +57,32 @@ public class TableActivity extends AppCompatActivity implements TableRecyclerVie
 //
 //        recyclerView.setAdapter(adapter);
 
-        List<Person> persons = new ArrayList<>();
-        persons.add(new Person("Emma Wilson", "23 years old", R.drawable.avatar));
-        persons.add(new Person("Lavery Maiss", "25 years old", R.drawable.avatar2));
-        persons.add(new Person("Lillie Watts", "35 years old", R.drawable.avatar3));
+//        List<Person> persons = new ArrayList<>();
+//        persons.add(new Person("Emma Wilson", "23 years old", R.drawable.avatar));
+//        persons.add(new Person("Lavery Maiss", "25 years old", R.drawable.avatar2));
+//        persons.add(new Person("Lillie Watts", "35 years old", R.drawable.avatar3));
+//
+//        RecyclerView recyclerView =  findViewById(R.id.rvNumbers);
+//
+//        RVAdapter adapter = new RVAdapter(persons);
+//
+//        LinearLayoutManager llm = new LinearLayoutManager(getApplicationContext());
+//        recyclerView.setLayoutManager(llm);
+//
+//        recyclerView.setAdapter(adapter);
 
-        RecyclerView recyclerView =  findViewById(R.id.rvNumbers);
 
-        RVAdapter adapter = new RVAdapter(persons);
+        List<TableRes> tables = new ArrayList<>();
+        tables.add(new TableRes("1", "โต๊ะกินข้าวไม้สไตล์โมเดิร์นที่คุณ", "http://pubmodule.space/admin/api/table/photos/1.jpg"));
+        tables.add(new TableRes("2", "โต๊ะกินข้าวไม้แบบคลา", "http://pubmodule.space/admin/api/table/photos/2.jpg"));
+        tables.add(new TableRes("3", "โต๊ะกินข้าวโมเดิร์นแบบไม้และเหล", "http://pubmodule.space/admin/api/table/photos/3.jpg"));
+        tables.add(new TableRes("4", "โต๊ะกินข้าวไม้แบบทร", "http://pubmodule.space/admin/api/table/photos/4.jpg"));
+        tables.add(new TableRes("5", "โต๊ะกินข้าวโมเดิร์นแบบไ", "http://pubmodule.space/admin/api/table/photos/5.jpg"));
+        tables.add(new TableRes("6", "โต๊ะกินข้าวไม้แบบยาวหรือแบบสี่เหล", "http://pubmodule.space/admin/api/table/photos/6.jpg"));
+
+        RecyclerView recyclerView = findViewById(R.id.rvNumbers);
+
+        TableAdapter adapter = new TableAdapter(getApplicationContext(), tables);
 
         LinearLayoutManager llm = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(llm);
