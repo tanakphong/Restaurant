@@ -9,10 +9,17 @@ public class TableRes {
      * photo_path : http://pubmodule.space/admin/api/table/photos/1.jpg
      */
 
-    private String id;
+    private int id;
     private String code;
     private String desc;
     private String photo_path;
+
+    public TableRes(int id, String code, String desc, String photo_path) {
+        this.id = id;
+        this.code = code;
+        this.desc = desc;
+        this.photo_path = photo_path;
+    }
 
     public TableRes(String code, String desc, String photo_path) {
         this.code = code;
@@ -20,11 +27,11 @@ public class TableRes {
         this.photo_path = photo_path;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 

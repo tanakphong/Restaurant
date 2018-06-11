@@ -2,10 +2,10 @@ package com.deverdie.restaurant;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import com.deverdie.restaurant.adapter.TableAdapter;
 import com.deverdie.restaurant.model.TableRes;
@@ -75,19 +75,20 @@ public class TableActivity extends AppCompatActivity implements TableAdapter.Ite
 
 
         List<TableRes> tables = new ArrayList<>();
-        tables.add(new TableRes("1", "โต๊ะกินข้าวไม้สไตล์โมเดิร์นที่คุณ", "http://pubmodule.space/admin/api/table/photos/1.jpg"));
-        tables.add(new TableRes("2", "โต๊ะกินข้าวไม้แบบคลา", "http://pubmodule.space/admin/api/table/photos/2.jpg"));
-        tables.add(new TableRes("3", "โต๊ะกินข้าวโมเดิร์นแบบไม้และเหล", "http://pubmodule.space/admin/api/table/photos/3.jpg"));
-        tables.add(new TableRes("4", "โต๊ะกินข้าวไม้แบบทร", "http://pubmodule.space/admin/api/table/photos/4.jpg"));
-        tables.add(new TableRes("5", "โต๊ะกินข้าวโมเดิร์นแบบไ", "http://pubmodule.space/admin/api/table/photos/5.jpg"));
-        tables.add(new TableRes("6", "โต๊ะกินข้าวไม้แบบยาวหรือแบบสี่เหล", "http://pubmodule.space/admin/api/table/photos/6.jpg"));
+        tables.add(new TableRes(1,"1", "โต๊ะกินข้าวไม้สไตล์โมเดิร์นที่คุณ", "http://pubmodule.space/admin/api/table/photos/1.jpg"));
+        tables.add(new TableRes(2,"2", "โต๊ะกินข้าวไม้แบบคลา", "http://pubmodule.space/admin/api/table/photos/2.jpg"));
+        tables.add(new TableRes(3,"3", "โต๊ะกินข้าวโมเดิร์นแบบไม้และเหล", "http://pubmodule.space/admin/api/table/photos/3.jpg"));
+        tables.add(new TableRes(4,"4", "โต๊ะกินข้าวไม้แบบทร", "http://pubmodule.space/admin/api/table/photos/4.jpg"));
+        tables.add(new TableRes(5,"5", "โต๊ะกินข้าวโมเดิร์นแบบไ", "http://pubmodule.space/admin/api/table/photos/5.jpg"));
+        tables.add(new TableRes(6,"6", "โต๊ะกินข้าวไม้แบบยาวหรือแบบสี่เหล", "http://pubmodule.space/admin/api/table/photos/6.jpg"));
 
         RecyclerView recyclerView = findViewById(R.id.rvNumbers);
 
          adapter = new TableAdapter(getApplicationContext(), tables);
 
-        LinearLayoutManager llm = new LinearLayoutManager(getApplicationContext());
-        recyclerView.setLayoutManager(llm);
+//        LinearLayoutManager llm = new LinearLayoutManager(getApplicationContext());
+//        recyclerView.setLayoutManager(llm);
+        recyclerView.setLayoutManager(new SpanningGridLayoutManager(this,2));
         adapter.setClickListener(this);
         recyclerView.setAdapter(adapter);
     }
@@ -95,7 +96,7 @@ public class TableActivity extends AppCompatActivity implements TableAdapter.Ite
     @Override
     public void onItemClick(View view, int position) {
         Log.i("TAG", "You clicked number " + adapter.getItem(position).getDesc() + ", which is at cell position " + position);
-
+        Toast.makeText(getApplicationContext(),adapter.getItem(position).getDesc() ,Toast.LENGTH_SHORT).show();
     }
 
 }

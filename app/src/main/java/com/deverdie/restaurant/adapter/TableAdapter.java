@@ -11,7 +11,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
 import com.deverdie.restaurant.R;
 import com.deverdie.restaurant.model.TableRes;
 
@@ -31,7 +30,7 @@ public class TableAdapter extends RecyclerView.Adapter<TableAdapter.TableViewHol
     @Override
     public TableViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-        View view = layoutInflater.inflate(R.layout.widget_cardview_activity_table, parent, false);
+        View view = layoutInflater.inflate(R.layout.widget_cardview_activity_table_grid, parent, false);
         return new TableViewHolder(view);
     }
 
@@ -43,7 +42,7 @@ public class TableAdapter extends RecyclerView.Adapter<TableAdapter.TableViewHol
         Glide.with(context)
                 .load(tables.get(position).getPhoto_path())
 //                .apply(RequestOptions.circleCropTransform())
-                .apply(RequestOptions.fitCenterTransform())
+//                .apply(RequestOptions.fitCenterTransform())
                 .into(holder.photo);
     }
 
@@ -52,7 +51,7 @@ public class TableAdapter extends RecyclerView.Adapter<TableAdapter.TableViewHol
         return tables.size();
     }
 
-    public static class TableViewHolder extends RecyclerView.ViewHolder {
+    public class TableViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         CardView cv;
         TextView code;
         TextView desc;
@@ -64,6 +63,12 @@ public class TableAdapter extends RecyclerView.Adapter<TableAdapter.TableViewHol
             code = itemView.findViewById(R.id.code);
             desc = itemView.findViewById(R.id.desc);
             photo = itemView.findViewById(R.id.photo);
+            cv.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View view) {
+            if (mClickListener != null) mClickListener.onItemClick(view, getAdapterPosition());
         }
     }
 
