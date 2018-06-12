@@ -6,5 +6,7 @@
     <dimen name="widget_cardview_activity_table_photo_width">64dp</dimen>
     <dimen name="widget_cardview_activity_table_textsize_code">28sp</dimen>
     <dimen name="widget_cardview_activity_table_textsize_desc">16sp</dimen>
+    <dimen name="widget_cardview_activity_menu_photo_width">100dp</dimen>
+    <dimen name="widget_cardview_activity_menu_photo_height">80dp</dimen>
 
 </resources>

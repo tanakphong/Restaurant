@@ -1,5 +1,6 @@
 package com.deverdie.restaurant.adapter;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -9,50 +10,65 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.deverdie.restaurant.R;
-import com.deverdie.restaurant.model.MainMenuRes;
+import com.deverdie.restaurant.model.MenuRes;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainMenuAdapter extends RecyclerView.Adapter<MainMenuAdapter.MainMenuViewHolder> {
-    private List<MainMenuRes> mainMenu = new ArrayList<>();
+public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.MenuViewHolder> {
+    Context context;
+    private List<MenuRes.DataBean> data = new ArrayList<>();
     private ItemClickListener mClickListener;
 
-    public void add(MainMenuRes mainMenuRes) {
-        mainMenu.add(mainMenuRes);
+    public MenuAdapter(Context context) {
+        this.context = context;
+    }
+
+    public void add(MenuRes.DataBean menuRes) {
+        data.add(menuRes);
     }
 
     @NonNull
     @Override
-    public MainMenuViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public MenuViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.widget_cardview_activity_main, parent, false);
-        return new MainMenuViewHolder(view);
+                .inflate(R.layout.widget_cardview_activity_menu, parent, false);
+        return new MenuAdapter.MenuViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MainMenuViewHolder holder, int position) {
-        MainMenuRes item = getItem(position);
-        holder.icon.setImageResource(item.getIco());
+    public void onBindViewHolder(@NonNull MenuViewHolder holder, int position) {
+        MenuRes.DataBean item = getItem(position);
+        Glide.with(context)
+                .load(item.getPhoto())
+                .into(holder.photo);
         holder.desc.setText(item.getDesc());
+        holder.code.setText(item.getCode());
+        holder.price.setText(item.getPrice());
+
     }
 
     @Override
     public int getItemCount() {
-        return mainMenu.size();
+        return data.size();
     }
 
-    public class MainMenuViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public class MenuViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         CardView cv;
-        ImageView icon;
+        ImageView photo;
         TextView desc;
+        TextView code;
+        TextView price;
 
-        MainMenuViewHolder(View itemView) {
+        MenuViewHolder(View itemView) {
             super(itemView);
             cv = itemView.findViewById(R.id.cv);
-            icon = itemView.findViewById(R.id.photo);
+            photo = itemView.findViewById(R.id.photo);
             desc = itemView.findViewById(R.id.desc);
+            code = itemView.findViewById(R.id.code);
+            price = itemView.findViewById(R.id.price);
             cv.setOnClickListener(this);
         }
 
@@ -65,8 +81,8 @@ public class MainMenuAdapter extends RecyclerView.Adapter<MainMenuAdapter.MainMe
 
 
     // convenience method for getting data at click position
-    private MainMenuRes getItem(int id) {
-        return mainMenu.get(id);
+    public MenuRes.DataBean getItem(int id) {
+        return data.get(id);
     }
 
     // allows clicks events to be caught
