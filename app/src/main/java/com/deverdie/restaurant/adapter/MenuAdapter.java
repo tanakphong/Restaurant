@@ -7,6 +7,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -17,9 +19,10 @@ import com.deverdie.restaurant.model.MenuRes;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.MenuViewHolder> {
-    Context context;
+public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.MenuViewHolder> implements Filterable {
+    private Context context;
     private List<MenuRes.DataBean> data = new ArrayList<>();
+    private List<MenuRes.DataBean> dataFiltered = new ArrayList<>();
     private ItemClickListener mClickListener;
 
     public MenuAdapter(Context context) {
@@ -28,6 +31,8 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.MenuViewHolder
 
     public void add(MenuRes.DataBean menuRes) {
         data.add(menuRes);
+        dataFiltered.add(menuRes);
+
     }
 
     @NonNull
@@ -52,8 +57,44 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.MenuViewHolder
 
     @Override
     public int getItemCount() {
-        return data.size();
+        return dataFiltered.size();
     }
+
+    @Override
+    public Filter getFilter() {
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence constraint) {
+                String charString = constraint.toString();
+                if (charString.isEmpty()) {
+                    dataFiltered = data;
+                } else {
+                    List<MenuRes.DataBean> filteredList = new ArrayList<>();
+                    for (MenuRes.DataBean row : dataFiltered) {
+
+                        // name match condition. this might differ depending on your requirement
+                        // here we are looking for name or phone number match
+                        if (row.getDesc().toLowerCase().contains(charString.toLowerCase()) || row.getCode().contains(charString)) {
+                            filteredList.add(row);
+                        }
+                    }
+
+                    dataFiltered = filteredList;
+                }
+
+                FilterResults filterResults = new FilterResults();
+                filterResults.values = dataFiltered;
+                return filterResults;
+            }
+
+            @Override
+            protected void publishResults(CharSequence constraint, FilterResults results) {
+                dataFiltered = (ArrayList<MenuRes.DataBean>) results.values;
+                notifyDataSetChanged();
+            }
+        };
+    }
+
 
     public class MenuViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         CardView cv;
@@ -82,7 +123,7 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.MenuViewHolder
 
     // convenience method for getting data at click position
     public MenuRes.DataBean getItem(int id) {
-        return data.get(id);
+        return dataFiltered.get(id);
     }
 
     // allows clicks events to be caught
